@@ -1,0 +1,27 @@
+{	"NumberofColumns" : 23,
+	"ColName": {
+        "id" : "INT",
+        "diabetes_binary" : "FLOAT",
+        "high_bp" : "FLOAT",
+        "high_chol" : "FLOAT",
+        "chol_check" : "FLOAT",
+        "bmi" : "FLOAT",
+        "smoker" : "FLOAT",
+        "stroke" : "FLOAT",
+        "heart_disease_or_attack" : "FLOAT",
+        "phys_activity" : "FLOAT",
+        "fruits" : "FLOAT",
+        "veggies" : "FLOAT",
+        "hvy_alcohol_consump" : "FLOAT",
+        "any_health_care" : "FLOAT",
+        "no_doc_bc_cost" : "FLOAT",
+        "gen_hlth" : "FLOAT",
+        "ment_hlth" : "FLOAT",
+        "phys_hlth" : "FLOAT",
+        "diff_walk" : "FLOAT",
+        "sex" : "FLOAT",
+        "age" : "FLOAT",
+        "education" : "FLOAT",
+        "income" : "FLOAT"
+    }
+}

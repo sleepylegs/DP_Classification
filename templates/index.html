@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TechAware | Diabetes Prediction</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+        /* Tooltip container */
+        [data-tooltip] {
+            position: relative;
+            cursor: pointer;
+            border-bottom: 1px dotted #555;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        /* Tooltip text */
+        [data-tooltip]:after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 10px;
+            display: none;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            max-width: 400px;
+            width: max-content;
+            z-index: 1;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.4;
+            white-space: normal;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 200px; /* Adjust the max height as needed */
+        }
+
+        /* Show tooltip on hover */
+        [data-tooltip]:hover:after {
+            display: block;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/static/img/TechAware.png" alt="" width="100" height="100">
+            <form action="https://shubhankarnehra.com">
+                  <input type="submit" value="Home" />
+            </form>
+        </div>
+
+        <div class="instructions-box">
+            <div class="instructions">
+                <h4 class="text-primary" style="margin-top: 10px;">Instructions to Fill the Form</h4>
+                <ul>
+                    <li><strong style="color:#E75480">Most of these are Yes Or No Questions:</strong> <strong>Enter 0 for No | Enter 1 for Yes</strong></li>
+                    <li><strong style="color:#E75480">BMI:</strong><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmicalc.htm" target="_blank"> Calculation</a></li>
+                    <li><strong style="color:#E75480">Demographics - Age:</strong><a href="https://www.icpsr.umich.edu/web/NAHDAP/studies/34085/datasets/0001/variables/AGEG5YR?archive=NAHDAP" target="_blank"> Age Categories</a></li>
+                    <li><strong style="color:#E75480">Demographics - Education:</strong><a href="https://www.icpsr.umich.edu/web/NAHDAP/studies/34085/datasets/0001/variables/EDUCA?archive=NAHDAP" target="_blank"> Education Categories</a></li>
+                    <li><strong style="color:#E75480">Demographics - Income:</strong><a href="https://www.icpsr.umich.edu/web/RCMD/studies/34085/datasets/0001/variables/INCOME2?archive=RCMD" target="_blank"> Income Categories</a></li>
+                    <li>Hover over each label to know more detail</li>
+                    <li>After completing the self-assessment head below the submit button to understand your result!</li>
+                    <li>I would greatly appreciate if you could take some time to fill <a href="https://forms.gle/6W6YjxmQqcVvNSXP7" target="blank">this short feedback form</a></li>
+                </ul>
+            </div>
+        </div>
+      <hr style="height:3px;border-width:0;color:blue;background-color:#E75480">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="margin-top: 30px;">
+                <h4 class="mb-3" style="text-align:center">Patient Details</h4>
+                <p class="lead" style="margin-top: 20px;">Fill the form below with all health indicators for successful diabetes prediction</p>
+
+                <form id="predictForm" class="needs-validation" style="margin-top: 50px;">
+                    <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="high_bp" data-tooltip="Have you been told that you have high blood pressure by a doctor, nurse, or other health professional?">High Blood Pressure</label>
+            <input type="text" class="form-control" id="high_bp" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="high_chol" data-tooltip="Have you EVER been told by a doctor, nurse, or other health professional that your blood cholesterol is high?">High Cholesterol</label>
+            <input type="text" class="form-control" id="high_chol" placeholder="" value="" required>
+          </div>
+        </div>
+
+		<div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="chol_check" data-tooltip="Have you had a cholesterol check within the past five years?">Cholesterol Check</label>
+            <input type="text" class="form-control" id="chol_check" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="bmi" data-tooltip="Enter your BMI value. Calculate BMI Above">BMI</label>
+            <input type="text" class="form-control" id="bmi" placeholder="" value="" required>
+          </div>
+        </div>
+
+		<div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="smoker" data-tooltip="Have you smoked at least 100 cigarettes in your entire life? ">Smoking</label>
+            <input type="text" class="form-control" id="smoker" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="stroke" data-tooltip="Have you EVER been told by a doctor, nurse, or other health professional that you had a stroke?">Stroke</label>
+            <input type="text" class="form-control" id="stroke" placeholder="" value="" required>
+          </div>
+        </div>
+
+		<div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="heart_disease_or_attack" data-tooltip="Have you been reported having coronary heart disease (CHD) or myocardial infarction (MI)?">Heart Disease Or Attack</label>
+            <input type="text" class="form-control" id="heart_disease_or_attack" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="phys_activity" data-tooltip="Have you done any physical activity or exercise during the past 30 days other than your regular job?">Physical Activity</label>
+            <input type="text" class="form-control" id="phys_activity" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fruits" data-tooltip="Do you consume fruit 1 or more times per day?">Diet - Consume Fruit</label>
+            <input type="text" class="form-control" id="fruits" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="veggies" data-tooltip="Do you consume vegetables 1 or more times per day?">Diet - Consume Vegetables</label>
+            <input type="text" class="form-control" id="veggies" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="hvy_alcohol_consump" data-tooltip="Are you a heavy drinker (adult men having more than 14 drinks per week and adult women having more than 7 drinks per week)?">Alcohol Consumption</label>
+            <input type="text" class="form-control" id="hvy_alcohol_consump" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="any_health_care" data-tooltip="Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?">Health Care</label>
+            <input type="text" class="form-control" id="any_health_care" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="no_doc_bc_cost" data-tooltip="Was there a time in the past 12 months when you needed to see a doctor but could not because of cost?">Health Care - Cost Issue</label>
+            <input type="text" class="form-control" id="no_doc_bc_cost" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="gen_hlth" data-tooltip="Would you say that in general your health is? [scale 1-5: 1 = excellent, 2 = very good, 3 = good, 4 = fair, 5 = poor]">General Health</label>
+            <input type="text" class="form-control" id="gen_hlth" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="ment_hlth" data-tooltip="Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good? [1-30 number of days]">Mental Health</label>
+            <input type="text" class="form-control" id="ment_hlth" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="phys_hlth" data-tooltip="Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good? [1-30 number of days]">Physical Health</label>
+            <input type="text" class="form-control" id="phys_hlth" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="diff_walk" data-tooltip="Do you have serious difficulty walking or climbing stairs?">Difficulty Walking</label>
+            <input type="text" class="form-control" id="diff_walk" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="sex" data-tooltip="Indicate your sex. [0 for female | 1 for male]">Demographics - Sex</label>
+            <input type="text" class="form-control" id="sex" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="age" data-tooltip="Enter your age. Check Age Categories Above">Demographics - Age</label>
+            <input type="text" class="form-control" id="age" placeholder="" value="" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="education" data-tooltip="What is the highest grade or year of school you completed? Check Education Categories Above">Demographics - Education</label>
+            <input type="text" class="form-control" id="education" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="income" data-tooltip="What is your annual household income from all sources? Check Income Categories Above">Demographics - Income</label>
+            <input type="text" class="form-control" id="income" placeholder="" value="" required>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
+                </form>
+
+
+                <div style= "margin-top: 20px;" id="result"></div>
+
+
+                <div id="result-box" class="rounded p-3 my-4" style="background-color: #f2f2f2;">
+
+                  <div id="result-details">
+                    <h5>What This Means:</h5>
+
+                    <p style="margin-top:25px"><strong>If your result is <span style="color: red;">1 (Diabetes)</span>, it suggests a higher risk of diabetes. It is crucial to take immediate action. Here are some steps to consider:</strong></p>
+                    <ul>
+                      <li><strong>Consult a healthcare professional:</strong> Schedule an appointment with a doctor to discuss your test results and receive a thorough evaluation.</li>
+                      <li><strong>Dietary changes:</strong> Adopt a balanced diet with a focus on low sugar and low carbohydrate foods. A dietitian can provide valuable guidance.</li>
+                      <li><strong>Regular exercise:</strong> Incorporate daily physical activity into your routine. Aim for at least 30 minutes of exercise, like brisk walking or swimming.</li>
+                      <li><strong>Medication or insulin:</strong> Depending on your condition, your doctor may recommend medication or insulin therapy to manage your blood sugar levels.</li>
+                      <li><strong>Monitoring:</strong> Keep track of your blood sugar levels regularly and follow your doctor's instructions closely.</li>
+                    </ul>
+
+                    <p style="margin-top:10px;"><strong>If your result is <span style="color: green;">0 (No Diabetes)</span>, it indicates a lower risk of diabetes. However, maintaining a healthy lifestyle is essential for your overall well-being:</strong></p>
+                    <ul>
+                      <li><strong>Healthy living:</strong> Continue to focus on a balanced diet, regular exercise, and maintaining a healthy weight.</li>
+                      <li><strong>Preventive care:</strong> Regular check-ups with your doctor are crucial for monitoring your health and addressing any potential risks.</li>
+                      <li><strong>Lifestyle choices:</strong> Avoid excessive sugar intake and unhealthy habits, such as smoking and excessive alcohol consumption.</li>
+                      <li><strong>Stay informed:</strong> Keep yourself informed about diabetes and its risk factors to make well-informed decisions about your health.</li>
+                    </ul>
+
+                      <hr style="height:3px;border-width:0;color:blue;background-color:#E75480">
+
+                    <p style="color: #666;">* Please note that this online test is for informational purposes only and cannot replace a medical diagnosis by a qualified healthcare provider. Consult a healthcare professional for personalized guidance.</p>
+                  </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2023 TechAware</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="https://shubhankarnehra.com/contact/" target="blank">Contact Me</a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#predictForm" ).submit(function( event ) {
+
+  // Stop form from submitting normally
+     event.preventDefault();
+
+  // Get some values from elements on the page:
+      var $form = $( this )
+      high_bp = $form.find("input[id='high_bp']" ).val()
+      high_chol = $form.find("input[id='high_chol']" ).val()
+      chol_check = $form.find("input[id='chol_check']" ).val()
+      bmi = $form.find("input[id='bmi']" ).val()
+      smoker = $form.find("input[id='smoker']" ).val()
+      stroke = $form.find("input[id='stroke']" ).val()
+      heart_disease_or_attack = $form.find("input[id='heart_disease_or_attack']" ).val()
+      phys_activity = $form.find("input[id='phys_activity']" ).val()
+      fruits = $form.find("input[id='fruits']" ).val()
+      veggies = $form.find("input[id='veggies']" ).val()
+      hvy_alcohol_consump = $form.find("input[id='hvy_alcohol_consump']" ).val()
+      any_health_care = $form.find("input[id='any_health_care']" ).val()
+      no_doc_bc_cost = $form.find("input[id='no_doc_bc_cost']" ).val()
+      gen_hlth = $form.find("input[id='gen_hlth']" ).val()
+      ment_hlth = $form.find("input[id='ment_hlth']" ).val()
+      phys_hlth = $form.find("input[id='phys_hlth']" ).val()
+      diff_walk = $form.find("input[id='diff_walk']" ).val()
+      sex = $form.find("input[id='sex']" ).val()
+      age = $form.find("input[id='age']" ).val()
+      education = $form.find("input[id='education']" ).val()
+      income = $form.find("input[id='income']" ).val()
+
+     var settings = {
+  "url": "/prediction",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "high_bp": high_bp,
+    "high_chol": high_chol,
+    "chol_check": chol_check,
+    "bmi": bmi,
+    "smoker": smoker,
+    "stroke": stroke,
+    "heart_disease_or_attack": heart_disease_or_attack,
+    "phys_activity": phys_activity,
+    "fruits": fruits,
+    "veggies": veggies,
+    "hvy_alcohol_consump": hvy_alcohol_consump,
+    "any_health_care": any_health_care,
+    "no_doc_bc_cost": no_doc_bc_cost,
+    "gen_hlth": gen_hlth,
+    "ment_hlth": ment_hlth,
+    "phys_hlth": phys_hlth,
+    "diff_walk": diff_walk,
+    "sex": sex,
+    "age": age,
+    "education": education,
+    "income": income
+  }
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  $( "#result" ).empty().append('<div class="alert alert-success" role="alert">'+response+'</div>' );
+});
+
+    });
+    </script>
+</body>
+</html>
